@@ -2,6 +2,14 @@
 // Set the content type to JSON
 header('Content-Type: application/json');
 
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    header('Allow: GET');
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Method Not Allowed']);
+    exit;
+}
+
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
 $ch = curl_init($url);
 
@@ -49,25 +57,41 @@ $data = array_filter($data, function ($key) {
     return ctype_digit((string) $key);
 }, ARRAY_FILTER_USE_KEY);
 
-if (isset($_GET['latest']) && $latestId !== null) { // Check if 'latest' is set in the query parameters and if it has a valid value
-    if (isset($data[$latestId])) { // Check if the latest project exists
+if (isset($_GET['latest']) && $latestId !== null) {
+    // Sanitize latestId
+    $latestId = (string) $latestId;
+
+    if (!ctype_digit($latestId)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid latest project ID']);
+        exit;
+    }
+
+    if (isset($data[$latestId])) {
         http_response_code(200);
         echo json_encode($data[$latestId]);
     } else {
         http_response_code(404);
         echo json_encode(['error' => 'Latest project not found']);
     }
-} elseif (isset($_GET['id'])) { // Check if 'id' is set in the query parameters
+} elseif (isset($_GET['id'])) {
+    // Sanitize id
     $id = $_GET['id'];
 
-    if (isset($data[$id])) { // Check if the requested project exists
+    if (!ctype_digit($id)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid project ID']);
+        exit;
+    }
+
+    if (isset($data[$id])) {
         http_response_code(200);
         echo json_encode($data[$id]);
     } else {
         http_response_code(404);
         echo json_encode(['error' => 'Project not found']);
     }
-} else { // If no specific project or latest is requested, return all projects
+} else {
     http_response_code(200);
     echo json_encode($data);
 }

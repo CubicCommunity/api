@@ -2,6 +2,14 @@
 // Before returning intended output, set the content type to JSON
 header('Content-Type: application/json');
 
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    http_response_code(405);
+    header('Allow: GET');
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Method Not Allowed']);
+    exit;
+}
+
 // Fetch the remote text file
 $text = file_get_contents('https://gh.cubicstudios.xyz/WebLPS/aval-project/code.txt');
 
