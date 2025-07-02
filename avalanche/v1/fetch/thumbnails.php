@@ -20,7 +20,7 @@ if ($image === false) { // Check if the image was fetched successfully
 }
 
 // Set the correct content type for PNG images
-header('Content-Type: image/png');
+header('Content-Type: image/webp');
 
 // Output the image data
 http_response_code(200);
