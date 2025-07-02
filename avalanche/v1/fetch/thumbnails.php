@@ -45,10 +45,10 @@ if ($image === false) { // Check if the image was fetched successfully
     exit;
 }
 
-// Set the correct content type for PNG images
-header('Content-Type: image/png');
+// Set the correct content type for JPEG images
+header('Content-Type: image/jpeg');
 
 // Output the image data
 http_response_code(200);
-imagepng($image);
+imagejpeg($image);
 imagedestroy($image);
