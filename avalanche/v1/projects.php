@@ -1,5 +1,4 @@
 <?php
-// filepath: d:\Repositories\api\avalanche\v1\Projects.php
 header('Content-Type: application/json');
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
