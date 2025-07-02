@@ -1,4 +1,5 @@
 <?php
+// Set the content type to JSON
 header('Content-Type: application/json');
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';

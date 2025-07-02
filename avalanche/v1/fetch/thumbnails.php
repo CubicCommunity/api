@@ -1,7 +1,9 @@
 <?php
+// Before returning intended output, set the content type to JSON
+header('Content-Type: application/json');
+
 if (!isset($_GET['id']) || empty($_GET['id'])) { // Check if 'id' parameter is set and not empty
     http_response_code(400);
-    header('Content-Type: application/json');
     echo json_encode(['error' => 'Missing or empty id parameter']);
     exit;
 }
@@ -13,7 +15,6 @@ $image = file_get_contents($url);
 
 if ($image === false) { // Check if the image was fetched successfully
     http_response_code(404);
-    header('Content-Type: application/json');
     echo json_encode(['error' => 'Image not found']);
     exit;
 }

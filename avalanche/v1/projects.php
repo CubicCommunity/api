@@ -1,4 +1,5 @@
 <?php
+// Set the content type to JSON
 header('Content-Type: application/json');
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
@@ -60,11 +61,13 @@ if (isset($_GET['latest']) && $latestId !== null) { // Check if 'latest' is set 
     $id = $_GET['id'];
 
     if (isset($data[$id])) { // Check if the requested project exists
+        http_response_code(200);
         echo json_encode($data[$id]);
     } else {
         http_response_code(404);
         echo json_encode(['error' => 'Project not found']);
     }
 } else { // If no specific project or latest is requested, return all projects
+    http_response_code(200);
     echo json_encode($data);
 }

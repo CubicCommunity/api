@@ -1,10 +1,12 @@
 <?php
+// Before returning intended output, set the content type to JSON
+header('Content-Type: application/json');
+
 // Fetch the remote image
 $image = file_get_contents('https://gh.cubicstudios.xyz/WebLPS/aval-project/thumbnail.png');
 
 if ($image === false) { // Check if the image was fetched successfully
     http_response_code(404);
-    header('Content-Type: application/json');
     echo json_encode(['error' => 'Image not found']);
     exit;
 }
