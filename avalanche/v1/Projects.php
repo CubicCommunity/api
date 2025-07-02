@@ -1,8 +1,8 @@
 <?php
-// filepath: d:\Repositories\api\avalanche\v1\Profiles.php
+// filepath: d:\Repositories\api\avalanche\v1\Projects.php
 header('Content-Type: application/json');
 
-$url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
+$url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $json = curl_exec($ch);
