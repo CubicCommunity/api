@@ -2,15 +2,22 @@
 // filepath: d:\Repositories\api\avalanche\v1\Profiles.php
 header('Content-Type: application/json');
 
-// Fetch the remote JSON file
-$json = file_get_contents('https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json');
+$url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$json = curl_exec($ch);
+
 if ($json === false) {
     http_response_code(500);
-    echo json_encode(['error' => 'Failed to fetch remote file']);
+    echo json_encode([
+        'error' => 'Failed to fetch remote file',
+        'curl_error' => curl_error($ch),
+    ]);
+    curl_close($ch);
     exit;
 }
+curl_close($ch);
 
-// Decode the JSON data
 $data = json_decode($json, true);
 if ($data === null) {
     http_response_code(500);
@@ -21,10 +28,8 @@ if ($data === null) {
     exit;
 }
 
-// Remove $schema if present
 unset($data['$schema']);
 
-// Handle query by id
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     if (isset($data[$id])) {
