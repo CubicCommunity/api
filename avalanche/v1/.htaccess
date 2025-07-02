@@ -1,10 +1,10 @@
-# Force URLs to lowercase (redirect if any uppercase letters)
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} [A-Z]
-RewriteRule (.*) ${tolower:$1} [R=301,L]
+# Redirect requests without .php to the actual file
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
 
-# Remove .php extension (case-insensitive)
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.+?)/?$ $1.php [L,NC]
+# Force all requests to lowercase
+RewriteMap lc int:tolower
+RewriteCond %{REQUEST_URI} [A-Z]
+RewriteRule (.*) ${lc:$1} [R=301,L]
