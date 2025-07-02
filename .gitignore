@@ -1,0 +1,117 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Composer dependencies
+/vendor/
+/composer.lock
+
+# Node dependencies (if any JS tooling)
+/node_modules/
+/package-lock.json
+/yarn.lock
+
+# Environment and config files
+.env
+.env.*
+*.local
+*.env.php
+*.ini
+*.bak
+*.old
+
+# Log files
+*.log
+logs/
+*.out
+
+# Cache and temp files
+/cache/
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*.bak
+
+# PHPUnit
+phpunit.xml
+phpunit.xml.dist
+/.phpunit.result.cache
+
+# Coverage reports
+coverage/
+*.cov
+*.lcov
+
+# Build and dist
+/dist/
+build/
+public/build/
+public/dist/
+
+# Uploaded files
+uploads/
+storage/
+files/
+
+# API documentation output
+docs/
+apidoc/
+swagger/
+
+# Database dumps
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+
+# Misc
+*.pid
+*.seed
+*.lock
+
+# Ignore compiled files
+*.class
+*.pyc
+*.pyo
+*.exe
+*.dll
+*.so
+*.o
+*.a
+*.out
+
+# Ignore test artifacts
+test-output/
+test-results/
+*.test.xml
+
+# Ignore user-specific files
+*.user
+*.session
+
+# Ignore backup files
+*~
+*.bak
+*.orig
+*.old
+
+# Ignore hidden files
+.*
+!.gitignore
+
+# Ignore API keys or secrets
+*.key
+*.pem
+*.crt
+secrets/
