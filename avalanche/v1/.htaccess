@@ -1,10 +1,9 @@
 RewriteEngine On
 
-# Redirect requests without .php to the actual file
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.*)$ $1.php [NC,L]
+# Only rewrite if the request is not a directory or an existing file
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 
-# Force all requests to lowercase
-RewriteMap lc int:tolower
-RewriteCond %{REQUEST_URI} [A-Z]
-RewriteRule (.*) ${lc:$1} [R=301,L]
+# If a .php file exists with the requested name (case-insensitive), rewrite to it
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [NC,L]
