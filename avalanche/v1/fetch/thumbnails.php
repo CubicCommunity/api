@@ -28,17 +28,27 @@ if (!ctype_digit($id)) {
 $id = urlencode($_GET['id']);
 $url = "https://levelthumbs.prevter.me/thumbnail/$id";
 
-$image = file_get_contents($url);
+$imageData = file_get_contents($url);
 
-if ($image === false) { // Check if the image was fetched successfully
+if ($imageData === false) {
     http_response_code(404);
     echo json_encode(['error' => 'Image not found']);
     exit;
 }
 
+// Try to create an image resource from the data
+$image = imagecreatefromstring($imageData);
+
+if ($image === false) { // Check if the image was fetched successfully
+    http_response_code(404);
+    echo json_encode(['error' => 'Unsupported image format']);
+    exit;
+}
+
 // Set the correct content type for PNG images
-header('Content-Type: image/webp');
+header('Content-Type: image/png');
 
 // Output the image data
 http_response_code(200);
-echo $image;
+imagepng($image);
+imagedestroy($image);
