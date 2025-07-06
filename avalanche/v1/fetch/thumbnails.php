@@ -45,10 +45,17 @@ if ($image === false) { // Check if the image was fetched successfully
     exit;
 }
 
-// Set the correct content type for JPEG images
-header('Content-Type: image/jpeg');
-
 // Output the image data
 http_response_code(200);
-imagejpeg($image);
+
+if (isset($_GET['webp'])) { // Check if request includes WebP parameter
+    // Set the correct content type for WebP images
+    header('Content-Type: image/webp');
+    imagewebp($image);
+} else {
+    // Set the correct content type for JPEG images
+    header('Content-Type: image/jpeg');
+    imagejpeg($image);
+}
+
 imagedestroy($image);
