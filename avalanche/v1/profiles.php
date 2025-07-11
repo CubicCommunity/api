@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$json = curl_exec($ch);
 
+$json = curl_exec($ch);
 if ($json === false) { // Check if the cURL request failed
     http_response_code(500);
 
@@ -26,6 +26,7 @@ if ($json === false) { // Check if the cURL request failed
     curl_close($ch);
     exit;
 }
+
 curl_close($ch);
 
 $data = json_decode($json, true);

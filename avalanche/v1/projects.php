@@ -45,12 +45,7 @@ if ($data === null) { // Check if JSON decoding failed
 curl_close($ch);
 
 $latestId = null;
-
-if (isset($_GET['latest'])) { // Check if 'latest' is set in the query parameters
-    $latestId = $data['latest'];
-} else {
-    $latestId = null;
-}
+isset($_GET['latest']) ? $latestId = $data['latest'] : $latestId = null; // Check if 'latest' is set in the query parameters
 
 // Remove non-number keys
 $data = array_filter($data, function ($key) {
