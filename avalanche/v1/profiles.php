@@ -6,16 +6,13 @@ $utils = new Utils();
 // Set the content type to JSON
 header('Content-Type: application/json');
 
+// The kind of request we're expecting
 $utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
 $ch = curl_init($url);
 
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-curl_setopt($ch, CURLOPT_VERBOSE, true);
-
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_FAILONERROR, true);
+curl_setopt_array($ch, $utils->headers);
 
 $json = curl_exec($ch);
 if ($json === false) {

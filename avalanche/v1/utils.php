@@ -1,4 +1,7 @@
 <?php
+/**
+ * The type of web request
+ */
 enum RequestMethod: string
 {
     case GET = 'GET';
@@ -9,9 +12,16 @@ enum RequestMethod: string
     case OPTIONS = 'OPTIONS';
 }
 
+/**
+ * General utilities
+ */
 class Utils
 {
-    public $headers = [ // default headers for web requests
+    /**
+     * Default header set for web requests
+     * @var array
+     */
+    public $headers = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FAILONERROR => true,
         CURLOPT_VERBOSE => true,
@@ -27,9 +37,16 @@ class Utils
         ],
     ];
 
-    public function checkMethod(string $allowed, RequestMethod $incoming): void // check if the request method is correct
+    /**
+     * Check if the method you're receiving is the method you're expecting
+     * 
+     * @param string $allowed The incoming request type, usually accessible through `$_SERVER['REQUEST_METHOD']`
+     * @param RequestMethod $incoming The `RequestMethod` representing the type of request you're expecting
+     * @return void Exits if request types are different
+     */
+    public function checkMethod(string $allowed, RequestMethod $incoming): void
     {
-        if ($allowed !== $incoming) {
+        if ($allowed !== $incoming->value) {
             http_response_code(response_code: 405);
 
             header(header: "Allow: $allowed");

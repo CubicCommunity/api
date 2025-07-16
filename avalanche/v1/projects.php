@@ -6,6 +6,7 @@ $utils = new Utils();
 // Set the content type to JSON
 header('Content-Type: application/json');
 
+// The kind of request we're expecting
 $utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';

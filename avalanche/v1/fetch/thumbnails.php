@@ -6,6 +6,7 @@ $utils = new Utils();
 // Before returning intended output, set the content type to JSON
 header('Content-Type: application/json');
 
+// The kind of request we're expecting
 $utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 if (!isset($_GET['id']) || empty($_GET['id'])) { // Check if 'id' parameter is set and not empty
