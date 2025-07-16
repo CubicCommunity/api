@@ -6,13 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
     header('Allow: GET');
     header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method Not Allowed']);
+    echo json_encode([
+        'error' => 'Method Not Allowed',
+    ]);
     exit;
 }
 
 if (!isset($_GET['id']) || empty($_GET['id'])) { // Check if 'id' parameter is set and not empty
     http_response_code(400);
-    echo json_encode(['error' => 'Missing or empty id parameter']);
+    echo json_encode([
+        'error' => 'Missing or empty id parameter',
+    ]);
     exit;
 }
 
@@ -21,7 +25,9 @@ $id = $_GET['id'];
 
 if (!ctype_digit($id)) {
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid profile ID']);
+    echo json_encode([
+        'error' => 'Invalid profile ID',
+    ]);
     exit;
 }
 
@@ -29,10 +35,11 @@ $id = urlencode($_GET['id']);
 $url = "https://levelthumbs.prevter.me/thumbnail/$id";
 
 $imageData = file_get_contents($url);
-
 if ($imageData === false) {
     http_response_code(404);
-    echo json_encode(['error' => 'Image not found']);
+    echo json_encode([
+        'error' => 'Image not found',
+    ]);
     exit;
 }
 
@@ -41,7 +48,9 @@ $image = imagecreatefromstring($imageData);
 
 if ($image === false) { // Check if the image was fetched successfully
     http_response_code(404);
-    echo json_encode(['error' => 'Unsupported image format']);
+    echo json_encode([
+        'error' => 'Unsupported image format',
+    ]);
     exit;
 }
 

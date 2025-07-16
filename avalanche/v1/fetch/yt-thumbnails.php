@@ -6,13 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
     header('Allow: GET');
     header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method Not Allowed']);
+    echo json_encode([
+        'error' => 'Method Not Allowed',
+    ]);
     exit;
 }
 
 if (!isset($_GET['url']) || empty($_GET['url'])) { // Check if 'url' parameter is set and not empty
     http_response_code(400);
-    echo json_encode(['error' => 'Missing or empty url parameter']);
+    echo json_encode([
+        'error' => 'Missing or empty url parameter',
+    ]);
     exit;
 }
 
@@ -49,7 +53,9 @@ $videoId = extract_youtube_id($videoUrl); // Extract the video ID using the func
 
 if (!$videoId) { // Check if a valid video ID was extracted
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid YouTube URL']);
+    echo json_encode([
+        'error' => 'Invalid YouTube URL',
+    ]);
     exit;
 }
 
@@ -58,7 +64,9 @@ $image = file_get_contents($thumbUrl); // Fetch the thumbnail image
 
 if ($image === false) { // Check if the thumbnail was fetched successfully
     http_response_code(404);
-    echo json_encode(['error' => 'Thumbnail not found']);
+    echo json_encode([
+        'error' => 'Thumbnail not found',
+    ]);
     exit;
 }
 

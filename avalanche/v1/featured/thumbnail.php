@@ -6,16 +6,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
     header('Allow: GET');
     header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method Not Allowed']);
+    echo json_encode([
+        'error' => 'Method Not Allowed',
+    ]);
     exit;
 }
 
 // Fetch the remote image
 $image = file_get_contents('https://gh.cubicstudios.xyz/WebLPS/aval-project/thumbnail.png');
-
 if ($image === false) { // Check if the image was fetched successfully
     http_response_code(404);
-    echo json_encode(['error' => 'Image not found']);
+    echo json_encode([
+        'error' => 'Image not found',
+    ]);
     exit;
 }
 
