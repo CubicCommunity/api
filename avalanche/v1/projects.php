@@ -14,15 +14,21 @@ $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
 $json = curl_exec($ch);
 
-if ($json === false) { // Check if the cURL request failed
-    http_response_code(500);
+if ($json === false) {
+    $errorMsg = curl_error($ch);
+    $errorCode = curl_errno($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
+    http_response_code(500);
     echo json_encode([
         'error' => 'Failed to fetch remote file',
-        'curl_error' => curl_error($ch),
+        'curl_error' => $errorMsg,
+        'curl_errno' => $errorCode,
+        'http_code' => $httpCode,
     ]);
 
     curl_close($ch);
