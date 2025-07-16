@@ -1,14 +1,12 @@
 <?php
+require "./utils.php";
+
+$utils = new Utils();
+
 // Set the content type to JSON
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    http_response_code(405);
-    header('Allow: GET');
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method Not Allowed']);
-    exit;
-}
+$utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
 $ch = curl_init($url);

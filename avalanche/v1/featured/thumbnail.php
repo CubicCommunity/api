@@ -1,16 +1,12 @@
 <?php
+require "../utils.php";
+
+$utils = new Utils();
+
 // Before returning intended output, set the content type to JSON
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    http_response_code(405);
-    header('Allow: GET');
-    header('Content-Type: application/json');
-    echo json_encode([
-        'error' => 'Method Not Allowed',
-    ]);
-    exit;
-}
+$utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 // Fetch the remote image
 $image = file_get_contents('https://gh.cubicstudios.xyz/WebLPS/aval-project/thumbnail.png');

@@ -1,23 +1,17 @@
 <?php
+require "./utils.php";
+
+$utils = new Utils();
+
 // Set the content type to JSON
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    http_response_code(405);
-    header('Allow: GET');
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method Not Allowed']);
-    exit;
-}
+$utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
 $ch = curl_init($url);
 
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-curl_setopt($ch, CURLOPT_VERBOSE, true);
-
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_FAILONERROR, true);
+curl_setopt_array($ch, $utils->headers);
 
 $json = curl_exec($ch);
 if ($json === false) {
@@ -36,6 +30,7 @@ if ($json === false) {
     curl_close($ch);
     exit;
 }
+
 
 $data = json_decode($json, true);
 if ($data === null) { // Check if JSON decoding failed
