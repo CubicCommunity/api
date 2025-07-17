@@ -1,5 +1,5 @@
 <?php
-require "./utils.php";
+require "../utils.php";
 
 $utils = new Utils();
 
@@ -12,6 +12,7 @@ $utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
 $ch = curl_init($url);
 
+curl_setopt($ch, CURLOPT_USERAGENT, $utils->agent);
 curl_setopt_array($ch, $utils->headers);
 
 $json = curl_exec($ch);

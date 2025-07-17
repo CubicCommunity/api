@@ -1,13 +1,13 @@
 <?php
+require "./utils.php";
+
+$utils = new Utils();
+
+// Set the content type to JSON
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    http_response_code(405);
-    header('Allow: GET');
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method Not Allowed']);
-    exit;
-}
+// The kind of request we're expecting
+$utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 echo json_encode([
     'service' => 'avalanche',

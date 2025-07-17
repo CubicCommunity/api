@@ -18,6 +18,12 @@ enum RequestMethod: string
 class Utils
 {
     /**
+     * Default user agent for web requests
+     * @var string
+     */
+    public $agent = 'Mozilla/5.0';
+
+    /**
      * Default header set for web requests
      * @var array
      */
