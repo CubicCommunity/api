@@ -29,7 +29,7 @@ class Utils
      */
     public $headers = [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FAILONERROR => true,
+        CURLOPT_FAILONERROR => false,
         CURLOPT_VERBOSE => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_ENCODING => 'gzip, deflate',
@@ -41,6 +41,16 @@ class Utils
             'Referer: https://mods.yoursite.com/',
             'Connection: keep-alive',
         ],
+    ];
+
+    /**
+     * Fewer headers for minimal requests
+     * @var array
+     */
+    public $headersMinimal = [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_USERAGENT => 'Mozilla/5.0',
     ];
 
     /**

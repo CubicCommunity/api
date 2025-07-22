@@ -13,7 +13,7 @@ $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProfiles.json';
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_USERAGENT, $utils->agent);
-curl_setopt_array($ch, $utils->headers);
+curl_setopt_array($ch, $utils->headersMinimal);
 
 $json = curl_exec($ch);
 if ($json === false) {
