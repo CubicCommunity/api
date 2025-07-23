@@ -3,10 +3,7 @@ require "../utils.php";
 
 $utils = new Utils();
 
-// Set the content type to JSON
 header('Content-Type: application/json');
-
-// The kind of request we're expecting
 $utils->checkMethod($_SERVER['REQUEST_METHOD'], RequestMethod::GET);
 
 $url = 'https://gh.cubicstudios.xyz/WebLPS/data/avalProjects.json';
@@ -22,6 +19,7 @@ if ($json === false) {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
     http_response_code(500);
+
     echo json_encode([
         'error' => 'Failed to fetch remote file',
         'curl_error' => $errorMsg,
@@ -33,9 +31,8 @@ if ($json === false) {
     exit;
 }
 
-
 $data = json_decode($json, true);
-if ($data === null) { // Check if JSON decoding failed
+if ($data === null) {
     http_response_code(500);
 
     echo json_encode([
@@ -49,15 +46,15 @@ if ($data === null) { // Check if JSON decoding failed
 
 curl_close($ch);
 
-$latestId = null;
-isset($_GET['latest']) ? $latestId = $data['latest'] : $latestId = null; // Check if 'latest' is set in the query parameters
+// Get and sanitize the latest project ID if present
+$latestId = isset($data['latest']) ? $data['latest'] : null;
 
-// Remove non-number keys
+// Remove non-number keys (keep only project IDs)
 $data = array_filter($data, function ($key) {
     return ctype_digit((string) $key);
 }, ARRAY_FILTER_USE_KEY);
 
-if (isset($_GET['latest']) && $latestId !== null) {
+if (isset($_GET['latest'])) {
     // Sanitize latestId
     $latestId = (string) $latestId;
 
@@ -75,7 +72,6 @@ if (isset($_GET['latest']) && $latestId !== null) {
         echo json_encode(['error' => 'Latest project not found']);
     }
 } elseif (isset($_GET['id'])) {
-    // Sanitize id
     $id = $_GET['id'];
 
     if (!ctype_digit($id)) {
